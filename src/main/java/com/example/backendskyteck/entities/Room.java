@@ -1,5 +1,6 @@
 package com.example.backendskyteck.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +24,7 @@ public class Room {
     String name ;
     private String Description ;
     private Instant createdDate ;
+    @JsonIgnore
     @OneToMany (mappedBy = "room")
     List<Poste> posts ;
 
