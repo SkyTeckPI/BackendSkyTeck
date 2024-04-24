@@ -15,6 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Message {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
