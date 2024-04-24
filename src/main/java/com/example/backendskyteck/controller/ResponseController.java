@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.backendskyteck.repository.ComplaintRepository;
 import com.example.backendskyteck.entities.Complaint;
 import com.example.backendskyteck.entities.Response;
-import com.example.backendskyteck.serviceInterface.ICompResService;
+import com.example.backendskyteck.serviceImplimentation.ICompResService;
 
 import java.time.LocalDateTime;
 import java.util.List;

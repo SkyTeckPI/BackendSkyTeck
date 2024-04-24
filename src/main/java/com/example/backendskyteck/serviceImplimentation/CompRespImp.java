@@ -2,7 +2,6 @@ package com.example.backendskyteck.serviceImplimentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.backendskyteck.serviceInterface.*;
 import com.example.backendskyteck.repository.*;
 import com.example.backendskyteck.entities.*;
 import java.util.List;

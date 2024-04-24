@@ -1,4 +1,4 @@
-package com.example.backendskyteck.serviceInterface;
+package com.example.backendskyteck.serviceImplimentation;
 
 import com.example.backendskyteck.entities.*;
 
