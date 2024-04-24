@@ -5,10 +5,8 @@ import com.example.backendskyteck.entities.*;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface ICompResService {
-
-
-
 
     List<Complaint> getAllComplaint();
 

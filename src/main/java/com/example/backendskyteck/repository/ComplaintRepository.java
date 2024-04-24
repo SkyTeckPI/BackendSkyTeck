@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.example.backendskyteck.entities.Complaint;
 
 @Repository
-public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {}
+public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
+
+}

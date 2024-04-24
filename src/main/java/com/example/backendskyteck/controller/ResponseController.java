@@ -41,10 +41,10 @@ public class ResponseController {
 
     }
 
-    @PostMapping()
-    public ResponseEntity<Response> createResponse(@RequestBody Response response) {
+    @PostMapping("/Respond/{idComp}")
+    public ResponseEntity<Response> createResponse(@RequestBody Response response,@PathVariable("idComp") int idComp) {
 
-            Complaint complaint = complaintRepository.findById(response.getComplaint().getIdComp()).orElse(null);
+            Complaint complaint = complaintRepository.findById(idComp).orElse(null);
 
 
 

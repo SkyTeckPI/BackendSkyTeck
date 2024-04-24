@@ -16,8 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/complaint")
+@RequestMapping("/complaint")
 public class ComplaintController {
 
 
@@ -35,9 +34,9 @@ public class ComplaintController {
         return new ResponseEntity<>(complaints, HttpStatus.OK);
     }
     // Get complaint by id
-    @GetMapping("/{id}")
-    public ResponseEntity<Complaint> getComplaintById(@PathVariable int id) {
-        Optional<Complaint> complaint = iCompResService.getComplaintById(id);
+    @GetMapping("/complaintShow")
+    public ResponseEntity<Complaint> getComplaintById(@RequestParam ("id") int idComp) {
+        Optional<Complaint> complaint = iCompResService.getComplaintById(idComp);
         return complaint.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -89,7 +88,8 @@ public class ComplaintController {
         }
         if (!c.getStatus().toString().equals(ComplaintStatus.TREATED.toString())) {
             return new ResponseEntity<>(Arrays.asList("Complaint is Not Treated Yet."), HttpStatus.BAD_REQUEST);
-        }else{
+        }
+        else{
             switch (note.toUpperCase(Locale.ROOT)){
                 case "VERY SATISFIED":
                     c.setNote(SatisfactionLevel.VERY_SATISFIED);

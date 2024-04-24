@@ -1,20 +1,20 @@
 package com.example.backendskyteck.serviceImplimentation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.backendskyteck.serviceInterface.*;
 import com.example.backendskyteck.repository.*;
 import com.example.backendskyteck.entities.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ICompRespImp implements ICompResService {
+public class CompRespImp implements ICompResService {
 
     private final ComplaintRepository complaintRepository;
     private final ResponseRepository responseRepository;
-
-    public ICompRespImp(ComplaintRepository complaintRepository, ResponseRepository responseRepository) {
+@Autowired
+    public CompRespImp(ComplaintRepository complaintRepository, ResponseRepository responseRepository) {
         this.complaintRepository = complaintRepository;
         this.responseRepository = responseRepository;
     }
