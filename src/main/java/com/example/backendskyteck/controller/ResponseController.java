@@ -17,23 +17,21 @@ import java.util.Optional;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/response")
 public class ResponseController {
-    @Autowired
-    private ICompResService iCompResService;
-    @Autowired
-    private ComplaintRepository complaintRepository;
+
+    private final ICompResService iCompResService;
+
+    private final ComplaintRepository complaintRepository;
     @GetMapping
     public ResponseEntity<List<Response>> getAllResponse() {
         List<Response> response = iCompResService.getAllResponse();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    // Get documents by id
-    @GetMapping("/{id}")
-    public ResponseEntity<Response> getComplaintById(@PathVariable int id) {
+
+    @GetMapping("/showResponse")
+    public ResponseEntity<Response> getResponseById(@RequestParam("id") int id) {
         Optional<Response> response = iCompResService.getResponseById(id);
 
 
@@ -41,8 +39,8 @@ public class ResponseController {
 
     }
 
-    @PostMapping("/Respond/{idComp}")
-    public ResponseEntity<Response> createResponse(@RequestBody Response response,@PathVariable("idComp") int idComp) {
+    @PostMapping("/Respond")
+    public ResponseEntity<Response> createResponse(@RequestBody Response response,@RequestParam("idComp") int idComp) {
 
             Complaint complaint = complaintRepository.findById(idComp).orElse(null);
 
@@ -58,16 +56,11 @@ public class ResponseController {
     }
 
     // Update documents
-    @PutMapping("/{id}")
-    public ResponseEntity<Response> updateResponse(@PathVariable int id, @RequestBody Response response) {
-        Optional<Response> oldResponse = iCompResService.getResponseById(id);
-        if (oldResponse.isPresent()) {
-            response.setIdRep(id);
-            Response updatedResponse = iCompResService.updateResponse(response);
-            return new ResponseEntity<>(updatedResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PutMapping
+    public ResponseEntity<Response> updateResponse(@RequestParam("id") int id, @RequestBody Response UpdatedResponse) {
+        return iCompResService.getResponseById(id).map(Resp -> {
+            return ResponseEntity.ok(iCompResService.updateResponse(Resp, UpdatedResponse));
+        }).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
     // Delete documents

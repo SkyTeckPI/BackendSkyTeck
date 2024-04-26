@@ -1,6 +1,7 @@
 package com.example.backendskyteck.controller;
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +17,10 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/complaint")
+@RequestMapping("/api/complaint")
+@AllArgsConstructor
 public class ComplaintController {
-
-
     private final ICompResService iCompResService;
-
-    public ComplaintController(final ICompResService iCompResService){
-        this.iCompResService=iCompResService;
-
-    }
-
-
     @GetMapping
     public ResponseEntity<List<Complaint>> getAllComplaint() {
         List<Complaint> complaints = iCompResService.getAllComplaint();
@@ -52,36 +45,26 @@ public class ComplaintController {
     }
 
     // Update complaint
-    @PutMapping("/{id}")
-    public ResponseEntity<Complaint> updateComplaint(@PathVariable int id, @RequestBody Complaint updatedComplaint) {
-        Optional<Complaint> optionalComplaint = iCompResService.getComplaintById(id);
-        if (optionalComplaint.isPresent()) {
-            Complaint complaint = optionalComplaint.get();
-            complaint.setDescription(updatedComplaint.getDescription());
-            complaint.setTypeRec(updatedComplaint.getTypeRec());
-            complaint.setDateComplaint(updatedComplaint.getDateComplaint());
-            complaint.setName(updatedComplaint.getName());
-            complaint.setLastname(updatedComplaint.getLastname());
-            complaint.setEmail(updatedComplaint.getEmail());
-            complaint.setStatus(updatedComplaint.getStatus());
-            Complaint updated = iCompResService.updateComplaint(complaint);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PutMapping
+    public ResponseEntity updateComplaint(
+            @RequestParam("idComp") int id
+            , @RequestBody Complaint updatedComplaint) {
+        return iCompResService.getComplaintById(id).map(comp -> {
+            return ResponseEntity.ok(iCompResService.updateComplaint(comp, updatedComplaint));
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Delete complaint
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComplaint(@PathVariable int id) {
+    public ResponseEntity deleteComplaint(@PathVariable int id) {
         iCompResService.deleteComplaint(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
     // ONLY IF REC IS TREATED
-    @PutMapping("/give-note/{id}/{note}")
-    public ResponseEntity<?> giveNote(@PathVariable int id, @PathVariable String note) throws Exception{
+    @PutMapping("/give-note")
+    public ResponseEntity<?> giveNote(@RequestParam("id") int id, @RequestParam("note") String note) throws Exception{
         Complaint c = iCompResService.getComplaintById(id).orElse(null);
         if (c == null) {
             return new ResponseEntity<>(Arrays.asList("Complaint NOT FOUND"), HttpStatus.NOT_FOUND);

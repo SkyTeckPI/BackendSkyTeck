@@ -15,19 +15,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Message {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String content;
     Date date;
 
-    @ToString.Exclude
-    @OneToOne(orphanRemoval = true)
+
+    @OneToOne
     @JoinColumn(name = "receiver_uuid")
     private User receiver;
 
-    @ManyToOne
+
+    @OneToOne
     @JoinColumn(name = "sender_uuid")
     private User sender;
 

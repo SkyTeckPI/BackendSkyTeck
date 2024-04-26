@@ -1,10 +1,10 @@
 package com.example.backendskyteck.entities;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 
 @Entity
 @Getter
@@ -20,7 +20,7 @@ public class User {
     String name;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Message> messages = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Complaint> complaints = new LinkedHashSet<>();
 
 }

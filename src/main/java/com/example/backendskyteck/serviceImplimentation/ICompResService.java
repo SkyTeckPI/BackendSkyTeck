@@ -15,6 +15,7 @@ public interface ICompResService {
     Complaint createComplaint(Complaint complaint) throws Exception;
 
     Complaint updateComplaint(Complaint complaint);
+    Complaint updateComplaint(Complaint complaint, Complaint newInfo);
 
     void deleteComplaint(int id);
 
@@ -26,7 +27,7 @@ public interface ICompResService {
 
     Response createResponse(Response response);
 
-    Response updateResponse(Response response);
+    Response updateResponse(Response response, Response NewInfo);
 
     void deleteResponse(int idRep);
 
